@@ -3,6 +3,8 @@ class Solution {
        ArrayDeque<Integer> q=new ArrayDeque<>();
        List<Integer> res=new ArrayList<>();
        int max=0;
+
+       //optimal solution using double ended que
     
        int i=0;
        while(i<nums.length){
