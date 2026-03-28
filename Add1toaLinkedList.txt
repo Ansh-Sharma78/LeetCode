@@ -1,0 +1,75 @@
+/*
+class Node{
+    int data;
+    Node next;
+
+    Node(int x){
+        data = x;
+        next = null;
+    }
+}
+*/
+
+class Solution {
+    public Node addOne(Node head) {
+        if(head.next==null && head.data==9){
+            head.data=0;
+            Node m=new Node(1);
+            m.next=head;
+            head=m;
+            return head;
+        }
+        // code here.
+        Node prev=null;
+        Node curr=head;
+        Node next;
+        int c=0;
+        while(curr!=null){
+            next=curr.next;
+            curr.next=prev;
+            prev=curr;
+            curr=next;
+        }
+        curr=prev;
+        int n=curr.data+1;
+        if(n>=10){
+                curr.data=n%10;
+                c=1;
+        }else{
+            curr.data=n;
+        }
+        curr=curr.next;
+        while(curr!=null){
+             n=curr.data+c;
+             if(n>=10){
+                curr.data=n%10;
+                c=1;
+             }else{
+                 curr.data=n;
+                  if(c>0){
+                   c--;
+                  }
+             }
+            if(curr.next==null){
+                break;
+            }
+            curr=curr.next;
+        }
+        if(c>0){
+            Node m=new Node(1);
+            curr.next=m;
+            c--;
+        }
+       Node prev2=null;
+        curr=prev;
+        next=null;
+         while(curr!=null){
+            next=curr.next;
+            curr.next=prev2;
+            prev2=curr;
+            curr=next;
+        }
+        
+        return prev2;
+    }
+}

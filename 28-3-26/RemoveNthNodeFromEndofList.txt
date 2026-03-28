@@ -1,0 +1,40 @@
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+
+//there is no way u can delete a node from the end, since we cannot traverse from the tail
+//there what we will do is we will traverse from the start and delete the node from the start only
+//from the start the node would be at pos-> size-n+1;
+
+class Solution {
+    public ListNode removeNthFromEnd(ListNode head, int n) {
+        if(head==null || head.next==null){
+             return null;
+        }
+        ListNode temp=head;
+        int size=1;
+        while(temp.next!=null){
+            temp=temp.next;
+            size++;
+        }
+        temp=head;
+        int k=size-n+1;
+        int i=0;
+        if(k==1){
+            return head.next;
+        }
+        while(i<k-2){
+            temp=temp.next;
+            i++;
+        }
+        temp.next=temp.next.next;
+        return head;
+    }
+}
