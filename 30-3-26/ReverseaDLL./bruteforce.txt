@@ -1,0 +1,43 @@
+/*
+class Node {
+    int data;
+    Node next;
+    Node prev;
+
+    Node(int data) {
+        this.data = data;
+        this.next = null;
+        this.prev = null;
+    }
+}
+*/
+class Solution {
+    public Node reverse(Node head) {
+          if(head==null || head.next==null){
+            return head; 
+        }
+        // code here
+        Node temp=head;
+        
+        while(temp.next!=null){
+            temp=temp.next;
+        }
+        Node tail=temp;
+        temp=head;
+        while(temp!=tail){
+            int t=temp.data;
+            temp.data=tail.data;
+            tail.data=t;
+            
+            
+            if(temp.next==tail){
+                break;
+            }
+            temp=temp.next;
+            tail=tail.prev;
+        }
+        return head;
+      
+      
+    }
+}
