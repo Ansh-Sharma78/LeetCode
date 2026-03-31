@@ -1,0 +1,64 @@
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+ //optimal solved on my own :-)))))))  leetcord hard btw
+class Solution {
+    int i=0;
+     ListNode start;
+     ListNode end;
+    ListNode join;
+    ListNode res;
+    public void reverse(ListNode start,ListNode end){
+        ListNode t=start;
+        ListNode prev=null;
+        ListNode next;
+        while(t!=null){
+            next=t.next;
+            t.next=prev;
+            prev=t;
+            t=next;
+        }
+        if(i==0){
+            res=end;
+            join=start;
+        }else{
+            join.next=end;
+            join=start;
+        }
+        i++;
+    }
+    public ListNode reverseKGroup(ListNode head, int k) {
+        if(k==1 || head==null || head.next==null){
+            return head;
+        }
+        ListNode temp=head;
+        res=head;
+        int j=1;
+        start=head;
+        while(temp!=null){
+             if(j==k){
+                end=temp;
+                temp=temp.next;
+                end.next=null;
+                reverse(start,end);
+                j=1;
+                start=temp;
+                continue;
+             }
+             temp=temp.next; 
+             if(temp!=null) j++;
+
+        }
+        if((temp==null || temp.next==null) && j<k){
+            join.next=start;
+        }
+        return res;
+    }
+}
