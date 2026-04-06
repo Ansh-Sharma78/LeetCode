@@ -1,0 +1,46 @@
+class Solution {
+    public int subarraysWithKDistinct(int[] nums, int k) {
+        HashMap<Integer, Integer> map= new HashMap<>();
+        int r=0;
+        int l=0;
+        int count1=0;
+        while(r<nums.length){
+             map.put(nums[r], map.getOrDefault(nums[r],0)+1);
+             while(map.size()>k){
+                map.put(nums[l], map.get(nums[l])-1);
+                if(map.get(nums[l])==0){
+                    map.remove(nums[l]);
+                }
+                l++;
+             }
+             if(map.size()<=k){
+                count1= count1 + r-l+1;
+             }
+             r++;
+        }
+        k=k-1;
+        map.clear();
+        if(k<0) return count1;
+        l=0;
+        r=0;
+        int count2=0;
+        while(r<nums.length){
+             map.put(nums[r], map.getOrDefault(nums[r],0)+1);
+             while(map.size()>k){
+                map.put(nums[l], map.get(nums[l])-1);
+                if(map.get(nums[l])==0){
+                    map.remove(nums[l]);
+                }
+                l++;
+             }
+             if(map.size()<=k){
+                count2= count2+ (r-l+1);
+             }
+             r++;
+        }  
+        return count1-count2;     
+                
+        
+        
+    }
+}
