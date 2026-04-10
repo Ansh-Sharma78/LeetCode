@@ -1,0 +1,25 @@
+class Solution {
+    public void rec(int i, List<Integer>temp,int candidates[], List<List<Integer>>l, int target,int sum){ 
+        if(sum>target){
+                return;
+        }
+        if(i>=candidates.length){
+            if(sum==target) l.add(new ArrayList<>(temp));
+            return;
+        }
+        sum+=candidates[i];
+        temp.add(candidates[i]);
+        rec(i, temp,candidates,l,target,sum);
+        temp.remove(temp.size()-1);
+        sum=sum-candidates[i];
+        rec(i+1,temp,candidates,l,target,sum);
+
+    }
+    public List<List<Integer>> combinationSum(int[] candidates, int target) {
+        List<List<Integer>> l=new ArrayList<>();
+        List<Integer>temp=new ArrayList<>();
+        int sum=0;
+        rec(0,temp,candidates, l, target,sum);
+        return l;
+    }
+}

@@ -1,0 +1,19 @@
+class Solution {
+    List<Integer>temp=new ArrayList<>();
+    public void rec(int nums[],List<List<Integer>> l,int i){
+           if(i>=nums.length){
+l.add(new ArrayList<>(temp));
+              return;
+           }
+
+           temp.add(nums[i]);
+           rec(nums,l,i+1);
+           temp.remove(temp.size()-1);
+           rec(nums,l,i+1);
+    }
+    public List<List<Integer>> subsets(int[] nums) {
+        List<List<Integer>> l=new ArrayList<>();
+        rec(nums,l, 0);
+        return l;
+    }
+}
