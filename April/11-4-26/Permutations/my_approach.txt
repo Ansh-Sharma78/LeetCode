@@ -1,0 +1,68 @@
+//This is using hashmap
+
+class Solution {
+    HashMap<Integer, Boolean> map=new HashMap<>();
+    public void rec(int i,int nums[],List<Integer> temp,List<List<Integer>>res){
+        if(i>=nums.length){
+            res.add(new ArrayList<>(temp));
+            return;
+        }
+        for(int j=0;j<nums.length;j++){
+
+            if(map.get(j)==false) {
+                temp.add(nums[j]);
+                map.put(j, true);
+                rec(i+1,nums,temp,res);
+                temp.remove(temp.size()-1);
+                map.put(j, false);
+            }
+            
+        }
+    }
+    public List<List<Integer>> permute(int[] nums) {
+        List<Integer> temp=new ArrayList<>();
+        List<List<Integer>> res=new ArrayList<>();
+        int k=0;
+        while( k<nums.length){
+            map.put(k, false);
+            k++;
+        }
+        rec(0, nums,temp,res);
+        return res;
+
+    }
+}
+
+//strivers approach same 
+class Solution {
+    HashMap<Integer, Boolean> map=new HashMap<>();
+    public void rec(int nums[],List<Integer> temp,List<List<Integer>>res){
+        if(temp.size()==nums.length){
+            res.add(new ArrayList<>(temp));
+            return;
+        }
+        for(int j=0;j<nums.length;j++){
+
+            if(map.get(j)==false) {
+                temp.add(nums[j]);
+                map.put(j, true);
+                rec(nums,temp,res);
+                temp.remove(temp.size()-1);
+                map.put(j, false);
+            }
+            
+        }
+    }
+    public List<List<Integer>> permute(int[] nums) {
+        List<Integer> temp=new ArrayList<>();
+        List<List<Integer>> res=new ArrayList<>();
+        int k=0;
+        while( k<nums.length){
+            map.put(k, false);
+            k++;
+        }
+        rec( nums,temp,res);
+        return res;
+
+    }
+}

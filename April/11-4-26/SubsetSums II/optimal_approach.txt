@@ -1,0 +1,24 @@
+class Solution {
+    //by me onli
+    List<Integer>temp=new ArrayList<>();
+    public void rec(int nums[],List<List<Integer>> l,int i){
+           if(i>=nums.length){
+              return;
+           }
+           for(int j=i;j<nums.length;j++){
+              if(j>i && nums[j]==nums[j-1]) continue;
+              temp.add(nums[j]);
+              l.add(new ArrayList<>(temp));
+              rec(nums, l, j+1);
+              temp.remove(temp.size()-1);
+           }
+    }
+    public List<List<Integer>> subsetsWithDup(int[] nums) {
+        List<List<Integer>> l=new ArrayList<>();
+        Arrays.sort(nums);
+        rec(nums, l, 0);
+        temp.clear();
+        l.add(new ArrayList(temp));
+        return l;
+    }
+}
