@@ -1,0 +1,60 @@
+class Solution {
+    //optimal without extra checks, safety is check here in O(1) time
+
+    public void rec(int col, int n,
+                    List<StringBuilder> board,
+                    List<List<String>> res,
+                    int[] rowUsed, int[] colUsed,
+                    int[] lowerDiag, int[] upperDiag) {
+
+        if (col == n) {
+            List<String> temp = new ArrayList<>();
+            for (StringBuilder sb : board) {
+                temp.add(sb.toString());
+            }
+            res.add(temp);
+            return;
+        }
+
+        for (int row = 0; row < n; row++) {
+
+            if (rowUsed[row] == 0 &&
+                colUsed[col] == 0 &&
+                lowerDiag[row + col] == 0 &&
+                upperDiag[n - 1 + col - row] == 0) {
+
+                // place queen
+                board.get(row).setCharAt(col, 'Q');
+                rowUsed[row] = colUsed[col] = 1;
+                lowerDiag[row + col] = 1;
+                upperDiag[n - 1 + col - row] = 1;
+
+                rec(col + 1, n, board, res, rowUsed, colUsed, lowerDiag, upperDiag);
+
+                // remove queen (backtrack)
+                board.get(row).setCharAt(col, '.');
+                rowUsed[row] = colUsed[col] = 0;
+                lowerDiag[row + col] = 0;
+                upperDiag[n - 1 + col - row] = 0;
+            }
+        }
+    }
+
+    public List<List<String>> solveNQueens(int n) {
+        List<List<String>> res = new ArrayList<>();
+        List<StringBuilder> board = new ArrayList<>();
+
+        String row = ".".repeat(n);
+        for (int i = 0; i < n; i++) {
+            board.add(new StringBuilder(row));
+        }
+
+        int[] rowUsed = new int[n];
+        int[] colUsed = new int[n];
+        int[] lowerDiag = new int[2 * n - 1];
+        int[] upperDiag = new int[2 * n - 1];
+
+        rec(0, n, board, res, rowUsed, colUsed, lowerDiag, upperDiag);
+        return res;
+    }
+}

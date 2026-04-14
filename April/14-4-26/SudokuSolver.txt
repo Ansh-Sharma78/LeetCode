@@ -1,0 +1,51 @@
+class Solution {
+
+    public boolean rec( int row,int col, char[][] board){
+       if(row==9){
+           return true;
+       }
+            int startrow= (col==8) ? row+1 : row;
+            int startcol=  (col==8) ? 0 : col+1;
+            if(board[row][col]=='.'){
+               for(int j=1;j<=9;j++){
+                if(isSafe(row, col,(char)(j+'0'), board)){
+                    board[row][col]=(char)(j+'0');
+                    if(rec(startrow, startcol, board)){
+                      return true;
+                    }
+                    board[row][col]='.';
+                }
+               }
+            }else{
+               return rec(startrow, startcol, board);
+
+            }
+
+            return false;
+    }
+    public boolean isSafe(int row, int col, char ch,char[][] board){
+        int startrow= (row/3)*3;
+        int startcol= (col/3) *3;
+        
+        int k=0;
+        //checking col
+        for(int i=0;i<9;i++){
+           if(board[i][col]==ch){
+              return false;
+           } 
+           if(board[row][i]==ch){
+              return false;
+           }
+        }
+        for(int i=startrow; i< startrow+3;i++){
+            for(int j=startcol;j<startcol + 3;j++){
+               if(board[i][j]==ch) return false;
+            }
+        }
+        return true;
+    }
+    public void solveSudoku(char[][] board) {
+         rec(0,0,board);
+
+    }
+}
