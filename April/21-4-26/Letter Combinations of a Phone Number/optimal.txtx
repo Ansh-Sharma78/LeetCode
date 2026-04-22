@@ -1,0 +1,31 @@
+class Solution {
+    public void rec(int i, String digits, StringBuilder sb, HashMap<Integer, String> map, List<String> res){
+        if(sb.length()==digits.length()){
+            res.add(sb.toString());
+            return;
+        }
+        String s2= map.get(digits.charAt(i)-'0');
+        for(int j=0;j<s2.length();j++){
+            char ch= s2.charAt(j);
+            rec(i+1, digits,sb.append(ch), map,res);
+            sb.deleteCharAt(sb.length()-1);
+        }
+
+    }
+    public List<String> letterCombinations(String digits) {
+        HashMap<Integer, String> map=new HashMap<>();
+        List<String> res=new ArrayList<>();
+        StringBuilder sb= new StringBuilder();
+
+        map.put(2,"abc");
+        map.put(3,"def");
+        map.put(4,"ghi");
+        map.put(5,"jkl");
+        map.put(6,"mno");
+        map.put(7,"pqrs");
+        map.put(8,"tuv");
+        map.put(9,"wxyz");
+        rec(0, digits, sb, map,res);
+        return res;
+    }
+}

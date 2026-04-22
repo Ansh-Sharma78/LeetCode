@@ -1,0 +1,29 @@
+class Solution {
+    public boolean isValid(String s){
+        int balance=0;
+        for(char c : s.toCharArray()){
+            if(c=='(') balance++;
+            else balance--;
+
+            if(balance<0) return false;
+        }
+        if(balance==0) return true;
+
+        return false;
+    }
+    public void generateAll(int n, String s, List<String> res){
+        if(s.length() == 2*n){
+            if(isValid(s)) res.add(s);
+            return;
+        }
+        generateAll(n, s + "(", res);
+        generateAll(n, s + ")", res);
+       
+    }
+
+    public List<String> generateParenthesis(int n) {
+        List<String> res= new ArrayList<>();
+        generateAll(n, "", res);
+        return res;
+    }
+}

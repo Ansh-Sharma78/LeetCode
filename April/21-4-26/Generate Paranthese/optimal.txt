@@ -1,0 +1,20 @@
+class Solution {
+    public void generateAll(int n, String s, List<String> res,int open,int close){
+        if(s.length() == 2*n){
+            if(open==close) res.add(s);
+            return;
+        }
+        
+        if(open<n) generateAll(n, s + "(", res, open+1, close);
+        if(close<open) generateAll(n, s + ")", res, open, close+1);
+       
+    }
+
+    public List<String> generateParenthesis(int n) {
+        List<String> res= new ArrayList<>();
+        int open=0;
+        int close=0;
+        generateAll(n, "", res,open,close);
+        return res;
+    }
+}
