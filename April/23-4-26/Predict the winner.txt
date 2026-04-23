@@ -1,0 +1,29 @@
+class Solution {
+    boolean res=false;
+    public boolean rec(int nums[],int c1,int c2, int l, int r,boolean turn){
+        if(l>r){
+            if(c1>=c2) return true;
+            return false;
+        }
+        
+        if(turn==true){
+            boolean pickleft=rec(nums, c1+nums[l], c2, l+1, r, false);
+
+            boolean pickright=rec(nums, c1+nums[r], c2, l, r-1, false);
+            return pickleft || pickright;
+           
+        }else{
+            boolean pickleft=rec(nums, c1, c2+nums[l], l+1, r, true);
+
+            boolean pickright=rec(nums, c1, c2+nums[r], l, r-1, true);
+
+            return pickleft && pickright;     
+        }
+    }
+    public boolean predictTheWinner(int[] nums) {
+        int c1=0;
+        int c2=0;
+        if(nums.length==1|| nums.length==0) return true;
+        return rec(nums, c1,c2,0,nums.length-1, true);
+    }
+}
