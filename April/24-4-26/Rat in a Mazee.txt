@@ -1,0 +1,43 @@
+class Solution {
+    //khud se kia
+    public void rec(int row, int col, int maze[][], StringBuilder sb, ArrayList<String> res){
+        if(row==-1 || row==maze.length || col==-1 || col== maze[0].length){
+            return;
+        }
+        
+        if(maze[row][col]==0) return;
+        if((row==maze.length-1 && col==maze[0].length-1 )){
+            String s=sb.toString();
+            res.add(new String(s));
+            return;
+        } 
+        maze[row][col]=0;
+       
+        
+        rec(row+1, col, maze, sb.append("D"),res);
+        sb.deleteCharAt(sb.length()-1);
+        
+        rec(row, col-1, maze, sb.append("L"),res);
+        sb.deleteCharAt(sb.length()-1);
+        
+        rec(row, col+1, maze, sb.append("R"),res);
+        sb.deleteCharAt(sb.length()-1);
+        
+         rec(row-1, col, maze, sb.append("U"),res);
+        sb.deleteCharAt(sb.length()-1);
+       
+        
+ 
+        
+        
+        maze[row][col]=1;
+        
+    }
+    public ArrayList<String> ratInMaze(int[][] maze) {
+        // code here
+        ArrayList<String> res=new ArrayList<>();
+        StringBuilder sb=new StringBuilder();
+        rec(0,0, maze, sb,res);
+        return res;
+    }
+}

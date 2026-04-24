@@ -1,0 +1,29 @@
+class Solution {
+    public boolean rec(int k, int row, int col, char board[][], String word) {
+        if (row == -1 || row == board.length || col == -1 || col == board[0].length) {
+            return false;
+        }
+        if(board[row][col]==word.charAt(k) && k+1 == word.length()) {
+            return true;
+        }
+        if(board[row][col]!=word.charAt(k)) return false;
+        char ch = board[row][col];
+        board[row][col] = '#';
+
+        boolean right = rec(k + 1, row, col + 1, board, word);
+        boolean up = rec(k + 1, row - 1, col, board, word);
+        boolean down = rec(k + 1, row + 1, col, board, word);
+        boolean left = rec(k + 1, row, col - 1, board, word);
+        board[row][col] = ch;
+        return right || down || up || left;
+    }
+
+    public boolean exist(char[][] board, String word) {
+        for(int i=0;i<board.length;i++){
+            for(int j=0;j<board[0].length;j++){
+                if(rec(0,i,j,board,word)) return true;
+            }
+        }
+        return false;
+    }
+}
