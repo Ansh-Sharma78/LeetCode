@@ -1,0 +1,36 @@
+class Solution {
+
+    public void rec(int i, String s,StringBuilder sb, List<String> res,int count){
+        if(count==4){
+            if(s.length()-i>0){
+                return;
+            } 
+            String s2=sb.toString();
+            String[] temp= s2.split("\\.");
+            for(int j=0;j<temp.length;j++){
+                int k=Integer.parseInt(temp[j]);
+                if(temp[j].length()>3) return;
+                if(k<0 || k>255) return;
+                if(temp[j].length()>1 && temp[j].charAt(0)=='0') return;
+            }
+
+            res.add(new String(sb.toString()));
+            return;
+        } 
+        for(int idx=i;idx<s.length() && idx<i+3;idx++){
+           int len= sb.length();
+           sb.append(s.substring(i,idx+1));
+           sb.append('.');
+           rec(idx+1, s, sb, res,count+1);
+           
+           sb.setLength(len);
+        }
+    }
+    public List<String> restoreIpAddresses(String s) {
+        List<String> res=new ArrayList<>();
+        StringBuilder sb=new StringBuilder();
+        rec(0,s ,sb, res, 0);
+        return res;
+
+    }
+}
