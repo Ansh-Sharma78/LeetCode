@@ -1,0 +1,63 @@
+/*
+class Node {
+    int data;
+    Node left, right;
+
+    public Node(int d) {
+        data = d;
+        left = right = null;
+    }
+}
+*/
+
+class Solution {
+    public boolean leftTraversal(Node temp, ArrayList<Integer>res){
+        if(temp==null) return false;
+        if(temp.left==null && temp.right==null) return true;
+        
+        res.add(temp.data);
+        if(leftTraversal(temp.left,res)) return true;
+        return leftTraversal(temp.right,res);
+    }
+    
+    public void leafTraversal(Node temp, ArrayList<Integer>res){
+        if(temp==null) return; 
+        if(temp.left==null && temp.right==null) {
+            res.add(temp.data);
+            return;
+        }
+        
+        leafTraversal(temp.left,res);
+        leafTraversal(temp.right,res);
+    }
+    
+    public boolean rightTraversal(Node temp, ArrayList<Integer>t){
+        if(temp==null) return false;
+        if(temp.left==null && temp.right==null) return true;
+        
+        t.add(temp.data);
+        if(rightTraversal(temp.right,t))  return true;
+      
+        return rightTraversal(temp.left,t);
+    }
+    
+    ArrayList<Integer> boundaryTraversal(Node root) {
+        // code here
+        ArrayList<Integer> res=new ArrayList<>();
+        if(root.left==null && root.right==null){
+            res.add(root.data);
+            return res;
+        }
+        res.add(root.data);
+        
+        if(root.left!=null) leftTraversal(root.left,res);
+        leafTraversal(root,res);
+        ArrayList<Integer>t=new ArrayList<>();
+        
+        if(root.right!=null) rightTraversal(root.right, t);
+        
+        Collections.reverse(t);
+        res.addAll(t);
+        return res;
+    }
+}
