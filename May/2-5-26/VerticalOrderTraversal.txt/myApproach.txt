@@ -1,0 +1,59 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    public void rec(TreeNode temp, TreeMap<Integer, List<List<Integer>>> map,int row, int col){
+        if(temp==null) return;
+        
+        ArrayList<Integer> t=new ArrayList<>();
+        t.add(row);
+        t.add(temp.val);
+        if(map.get(col)!=null){
+            map.get(col).add(t);
+        }else{
+            map.put(col, new ArrayList<>());
+            map.get(col).add(t);
+        }
+
+        rec(temp.left, map,row+1, col-1);
+        rec(temp.right,map, row+1, col+1);
+
+    }
+    public List<List<Integer>> verticalTraversal(TreeNode root) {
+        TreeMap<Integer, List<List<Integer>>> map=new TreeMap<>();
+        List<List<Integer>> res=new ArrayList<>();
+        rec(root, map,0, 0);
+        for(int k: map.keySet()){
+            List<List<Integer>> t= map.get(k);
+            Collections.sort(t, (a, b) -> {
+    if (!a.get(0).equals(b.get(0))) {
+        return a.get(0) - b.get(0); // sort by index 0
+    } else {
+        return a.get(1) - b.get(1); // if same, sort by index 1
+    }
+});
+        }
+        
+        for(int k: map.keySet()){
+             List<List<Integer>> t= map.get(k);
+             List<Integer> y=new ArrayList<>();
+             for(List<Integer> z : t){
+                y.add(z.get(1));
+             }
+             res.add(y);
+        }
+        return res;
+    }
+}
