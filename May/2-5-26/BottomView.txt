@@ -1,0 +1,48 @@
+/*
+class Node {
+    int data;
+    Node left, right;
+
+    Node(int val) {
+        this.data = val;
+        this.left = null;
+        this.right = null;
+    }
+}
+*/
+record Pair(Node node, int value) {
+    
+}
+class Solution {
+    public ArrayList<Integer> topView(Node root) {
+        // code here
+        ArrayList<Integer> res=new ArrayList<>();
+        TreeMap<Integer, Integer> map=new TreeMap<>();
+        
+        Deque<Pair> q=new ArrayDeque<>();
+        
+        q.add(new Pair(root, 0));
+        while(!q.isEmpty()){
+            
+            int k=q.size();
+            
+            for(int i=0;i<k;i++){
+                Pair p=q.poll();
+                int z= p.value();
+                
+                if(!map.containsKey(z)){
+                    map.put(z, p.node().data);
+                }
+                if(p.node().left!=null) q.add(new Pair(p.node().left, z-1));
+               if(p.node().right!=null) q.add(new Pair(p.node().right,z+1));
+            
+            }
+        }
+        
+        for(int k: map.keySet()){
+            res.add(map.get(k));
+        }
+        return res;
+        
+    }
+}
