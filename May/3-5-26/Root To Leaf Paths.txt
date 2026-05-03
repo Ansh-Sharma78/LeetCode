@@ -1,0 +1,45 @@
+/*
+
+Definition for Binary Tree Node
+class Node
+{
+    int data;
+    Node left;
+    Node right;
+
+    Node(int data)
+    {
+        this.data = data;
+        left = null;
+        right = null;
+    }
+}
+*/
+
+class Solution {
+    public static void rec(Node temp, ArrayList<ArrayList<Integer>> res, ArrayList<Integer> t){
+        if(temp==null){
+            return;
+        }
+        
+        if(temp.left==null && temp.right==null){
+            t.add(temp.data);
+            res.add(new ArrayList<>(t));
+        }else{
+          t.add(temp.data);    
+        }
+        
+        rec(temp.left, res, t);
+        rec(temp.right,res, t);
+        t.remove(t.size()-1);
+        
+    }
+    public static ArrayList<ArrayList<Integer>> Paths(Node root) {
+        // code here
+        ArrayList<ArrayList<Integer>> res=new ArrayList<>();
+        ArrayList<Integer> t=new ArrayList<>();
+        rec(root, res, t);
+        return res;
+        
+    }
+}
