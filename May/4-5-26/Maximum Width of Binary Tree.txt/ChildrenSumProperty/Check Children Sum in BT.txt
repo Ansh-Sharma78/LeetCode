@@ -1,0 +1,31 @@
+/*
+class Node{
+    int data;
+    Node left,right;
+
+    Node(int key)
+    {
+        data = key;
+        left = right = null;
+    }
+}
+*/
+class Solution {
+    public boolean rec(Node temp){
+        if(temp==null || (temp.left==null && temp.right==null)) return true;
+    
+        int lefts= (temp.left==null) ? 0 : temp.left.data;
+        int rights= (temp.right==null) ? 0 : temp.right.data;
+        
+        if(temp.data!=lefts+rights) return false;
+        
+        boolean l=rec(temp.left);
+        boolean r=rec(temp.right);
+        
+        return l && r;
+    }
+    public boolean isSumProperty(Node root) {
+        //  code here
+         return rec(root);
+    }
+}
