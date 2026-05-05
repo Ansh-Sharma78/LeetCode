@@ -1,0 +1,66 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+
+    public List<Integer> distanceK(TreeNode root, TreeNode target, int k) {
+       HashMap<TreeNode, TreeNode> map=new HashMap<>();
+       ArrayDeque<TreeNode> q=new ArrayDeque<>();
+       Set<TreeNode> set=new HashSet<>();
+       List<Integer> res=new ArrayList<>();
+       if(k==0){
+        res.add(target.val);
+        return res;
+       }
+       q.add(root);
+       while(!q.isEmpty()){
+        
+           TreeNode temp=q.poll();
+
+           if(temp.left!=null) map.put(temp.left, temp);
+           if(temp.right!=null) map.put(temp.right, temp);
+
+           if(temp.left!=null) q.add(temp.left);
+           if(temp.right!=null) q.add(temp.right);
+       }
+       q.clear();
+
+       set.add(target);
+       q.add(target);
+       int count=0;
+       while(!q.isEmpty()){
+          int z=q.size();
+          if(count==k){
+             while(!q.isEmpty()){
+                res.add(q.poll().val);
+             }
+             return res;
+          }
+         
+          for(int i=0;i<z;i++){
+             TreeNode temp=q.poll();
+        if(map.get(temp)!=null && (!set.contains(map.get(temp)))) {
+            q.add(map.get(temp));
+            set.add(map.get(temp));
+        }
+        if(temp.left!=null && (!set.contains(temp.left))){
+            q.add(temp.left);
+            set.add(temp.left);
+        } 
+        if(temp.right!=null && (!set.contains(temp.right))) {
+            q.add(temp.right);
+            set.add(temp.right);
+        }
+          }
+        
+         count++;
+       }
+       return res;
+    }
+}

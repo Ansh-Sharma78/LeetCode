@@ -1,0 +1,75 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    public TreeNode find(TreeNode temp, int start){
+    if(temp == null) return null;
+
+    if(temp.val == start) return temp;
+
+    TreeNode left = find(temp.left, start);
+    if(left != null) return left;
+
+    return find(temp.right, start);
+}
+    public int amountOfTime(TreeNode root, int start) {
+        HashMap<TreeNode, TreeNode> map=new HashMap<>();
+        ArrayDeque<TreeNode> q=new ArrayDeque<>();
+        Set<TreeNode> set=new HashSet<>();
+        q.add(root);
+        while(!q.isEmpty()){
+            TreeNode temp=q.poll();
+            if(temp.left!=null){
+                 map.put(temp.left, temp);
+                 q.add(temp.left);
+            }
+            if(temp.right!=null){
+                map.put(temp.right, temp);
+                q.add(temp.right);
+            } 
+        }
+        q.clear();
+        TreeNode target=find(root, start);
+
+        int count=0;
+        q.add(target);
+        set.add(target);
+        while(!q.isEmpty()){
+            int k=q.size();
+
+            for(int i=0;i<k;i++){
+                TreeNode temp=q.poll();
+
+                if(map.get(temp)!=null && !set.contains(map.get(temp))){
+                    q.add(map.get(temp));
+                    set.add(map.get(temp));
+                }
+                if(temp.left!=null && !set.contains(temp.left)){
+                    q.add(temp.left);
+                    set.add(temp.left);
+                }
+                if(temp.right!=null && !set.contains(temp.right)){
+                    q.add(temp.right);
+                    set.add(temp.right);
+                }
+            }
+            count++;
+        }
+        return count-1;
+
+      
+
+    }
+}
